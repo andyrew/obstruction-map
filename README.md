@@ -1,4 +1,9 @@
-# obstruction-map
-Example software for using obstruction maps to control window shades.
+# Obstruction Map Tools
 
-This code accompanies the paper in Journal of Building Engineering: https://doi.org/10.1016/j.jobe.2020.101170
+Example software for using photographic obstruction maps to control window shading.
+The code in this repository accompanies the paper in Journal of Building Engineering: https://doi.org/10.1016/j.jobe.2020.101170
+
+  * **convert-fish2orthonorm.py** - code from appendix 1 of the paper
+  * **obstruction-map-query.py** - code from appendix 2
+  
+  
