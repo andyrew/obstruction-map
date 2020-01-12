@@ -5,5 +5,6 @@ The code in this repository accompanies the paper in Journal of Building Enginee
 
   * **convert-fish2orthonorm.py** - code from appendix 1 of the paper
   * **obstruction-map-query.py** - code from appendix 2
+  * **images** directory - contains example photos from the paper for testing the code
   
   
