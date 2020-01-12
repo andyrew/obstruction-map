@@ -15,6 +15,7 @@ The code in this repository accompanies the paper in Journal of Building Enginee
 ## Measuring angular distortion
 
 I'll include some of the scripts used for measuring angular distortion soon. For now I've included a file for 3D printing an adapter for mounting the camera module to a stepper motor.
+
 ![CAD model of adapter to mount camera module to stepper motor](lens_distortion/camera_stepper_mount.png)
 
 Hardware used to rotate camera for distortion calibration:
