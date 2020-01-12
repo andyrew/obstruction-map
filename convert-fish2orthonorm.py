@@ -4,10 +4,11 @@ import numpy as np
 
 fisheye_center = [ 1136, 972 ]							# Center of circle in image pixel coordinates
 fisheye_radius = 900									# Fisheye radius in image pixels
-angular_distortion = [ -0.4339, 0.5808, -0.1185, 0.9661, 0 ]	# Angular distortion quadratic exponents
+angular_distortion = [ -0.4339, 0.5808, -0.1185, 0.9661, 0 ]	# Angular distortion polynomial coefficients
 output_resolution = [ 900, 900 ]
-filename = 'path/inputL.jpg'
-output_filename = 'path/outputL.jpg'
+filename = 'images/inputL.jpg'
+camera_rotation = 0.14									# Rotation angle of the camera for this image
+output_filename = 'images/outputL.jpg'
 
 # Function to correct image angular distortion
 def undistortangle( pixelcoord ):
@@ -18,12 +19,26 @@ def undistortangle( pixelcoord ):
 	norm_distance_quadlist = [ norm_distance**4, norm_distance**3, norm_distance**2, 
 							norm_distance**1, norm_distance**0 ]
 	undistort_distance = sum(i[0] * i[1] for i in zip(angular_distortion,norm_distance_quadlist))
+	
+	if camera_rotation == 0:
+		rotated_pixelcoord = pixelcoord
+	else:
+		pixel_angle = math.atan2( 
+							pixelcoord[1] - fisheye_center[1], 
+							pixelcoord[0] - fisheye_center[0] 
+						) + math.radians( camera_rotation )
+		pixel_dist = math.sqrt( 
+						math.pow( pixelcoord[0] - fisheye_center[0], 2) + math.pow(pixelcoord[1] - fisheye_center[1],2)
+					)
+		rotated_pixelcoord = [ fisheye_center[0] + pixel_dist * math.cos(pixel_angle),
+								fisheye_center[1] + pixel_dist * math.sin(pixel_angle) ]
+
 	if norm_distance == 0: 
 		undistort_pixelcoord=[0,0]
 	else:
-		undistort_pixelcoord = [ 	int( ( pixelcoord[0] - fisheye_center[0] ) * 
+		undistort_pixelcoord = [ 	int( ( rotated_pixelcoord[0] - fisheye_center[0] ) * 
 									undistort_distance / norm_distance + fisheye_center[0] ),
-							int( (pixelcoord[1]-fisheye_center[1] ) * 
+							int( (rotated_pixelcoord[1]-fisheye_center[1] ) * 
 									undistort_distance / norm_distance + fisheye_center[1] ) ]
 	return( undistort_pixelcoord )
 
